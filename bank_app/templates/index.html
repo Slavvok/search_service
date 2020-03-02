@@ -43,7 +43,7 @@ $("#fio_form").on("submit", function(event){
     type : "POST",
     url: "/get_fio_info/",
     data: {"fio": $("#fioInput").val(),
-           "birthday": $("#birthayInput").val()},
+           "birthday": $("#birthdayInput").val()},
     success: function(data){
       console.log(data);
       $("#fio_info").html(data);

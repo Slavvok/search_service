@@ -61,6 +61,10 @@ def search_person_by_fio(fio, birthday):
     #TODO: Полноценный поиск
     last_name = fio.split()[0]
     df = load()
-    df = df[df['LastName'].str.match(last_name, flags=re.IGNORECASE)]
-    df.columns = ['Имя', 'Фамилия', 'Отчество', 'Дата рождения', 'ID']
-    return df.to_html()
+    df = df[df['LastName'].str.match(last_name, flags=re.IGNORECASE) &
+            df['Birthdate'].str.match(birthday)]
+    if not df.empty:
+        df.columns = ['Имя', 'Фамилия', 'Отчество', 'Дата рождения', 'ID']
+        return df.to_html()
+    else:
+        return 'Не найдено совпадений. Проверьте входные данные.'

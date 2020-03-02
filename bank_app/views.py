@@ -37,12 +37,15 @@ class GetIdsView(View):
         end = request.POST.get('end')
         # start = datetime.datetime(2020, 1, 30)
         # end = datetime.datetime(2020, 3, 1)
-        ids = client.service.GetDebtorsByLastPublicationPeriod(start, end)
-        if ids:
-            ids = [i['DebtorPerson']['BankruptId'] for i in ids['_value_1'] if 'DebtorPerson' in i]
-            return render(request, 'response.html', {'ids': ids})
-        else:
-            return HttpResponse('Нет данных за текущий период')
+        try:
+            ids = client.service.GetDebtorsByLastPublicationPeriod(start, end)
+            if ids:
+                ids = [i['DebtorPerson']['BankruptId'] for i in ids['_value_1'] if 'DebtorPerson' in i]
+                return render(request, 'response.html', {'ids': ids})
+            else:
+                return HttpResponse('Нет данных')
+        except Exception as e:
+            return HttpResponse(e)
 
 
 @method_decorator(csrf_exempt, name='dispatch')

@@ -42,7 +42,9 @@ $("#fio_form").on("submit", function(event){
    $.ajax({
     type : "POST",
     url: "/get_fio_info/",
-    data: {"fio": $("#fioInput").val(),
+    data: {"last_name": $("#lastNameInput").val(),
+           "first_name": $("#firstNameInput").val(),
+           "middle_name": $("#middleNameInput").val(),
            "birthday": $("#birthdayInput").val()},
     success: function(data){
       console.log(data);

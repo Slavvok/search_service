@@ -56,13 +56,19 @@ def load():
         return df
 
 
-def search_person_by_fio(fio, birthday):
+def search_person_by_fio(last_name, first_name, birthday, middle_name=None):
     """Функция для поиска совпадений по имени и дате рождения"""
-    #TODO: Полноценный поиск
-    last_name = fio.split()[0]
+    #TODO: Найти лучший способ поиска по отчеству
     df = load()
-    df = df[df['LastName'].str.match(last_name, flags=re.IGNORECASE) &
-            df['Birthdate'].str.match(birthday)]
+    if middle_name:
+        df = df[df['LastName'].str.match(last_name, flags=re.IGNORECASE) &
+                df['FirstName'].str.match(first_name, flags=re.IGNORECASE) &
+                df['MiddleName'].str.match(middle_name, flags=re.IGNORECASE) &
+                df['Birthdate'].str.match(birthday)]
+    else:
+        df = df[df['LastName'].str.match(last_name, flags=re.IGNORECASE) &
+                df['FirstName'].str.match(first_name, flags=re.IGNORECASE) &
+                df['Birthdate'].str.match(birthday)]
     if not df.empty:
         df.columns = ['Имя', 'Фамилия', 'Отчество', 'Дата рождения', 'ID']
         return df.to_html()

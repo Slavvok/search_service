@@ -62,7 +62,11 @@ class GetIdInfoView(View):
 @method_decorator(csrf_exempt, name='dispatch')
 class GetInfoByFioView(View):
     def post(self, request):
-        fio = request.POST.get('fio')
+        last_name = request.POST.get('last_name')
+        first_name = request.POST.get('first_name')
         birthday = request.POST.get('birthday')
-        info = search_person_by_fio(fio, birthday)
+        middle_name = None
+        if 'middle_name' in request.POST:
+            middle_name = request.POST.get('middle_name')
+        info = search_person_by_fio(first_name, last_name, birthday, middle_name)
         return HttpResponse(info)

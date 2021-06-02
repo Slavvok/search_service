@@ -20,6 +20,6 @@ requests-toolbelt==0.9.1
 six==1.14.0
 SOAPpy==0.12.22
 sqlparse==0.3.0
-urllib3==1.25.8
+urllib3==1.26.5
 wstools==0.4.8
 zeep==3.4.0
